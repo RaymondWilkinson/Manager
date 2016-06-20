@@ -41,6 +41,9 @@ abstract class AbstractProvider extends BaseProvider implements ProviderInterfac
         $this->credentialsResponseBody = $response;
 
         if ($user instanceof User) {
+            $user->setToken($token)
+                ->setRefreshToken($this->parseRefreshToken($response))
+                ->setExpiresIn($this->parseExpiresIn($response));
             return $user->setAccessTokenResponseBody($this->credentialsResponseBody);
         }
 
